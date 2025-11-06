@@ -1,4 +1,4 @@
-## EX-NO-9-RSA-Algorithm
+# EX-NO-9-RSA-Algorithm
 
 ## AIM:
 To Implement RSA Encryption Algorithm in Cryptography
@@ -36,104 +36,89 @@ Step 5: **Security Foundation
 The security of RSA relies on the difficulty of factoring large numbers; thus, choosing sufficiently large prime numbers for \( p \) and \( q \) is crucial for security.
 
 ## Program:
-``
+```
+#include <stdio.h>  
+#include <math.h>  
+long long gcd(long long a, long long b) {  
+while (b != 0) {         
+long long temp = b;         
+b = a % b;        
+temp;  
+}  
+return a;  
+}  
+ a = 
+long long modInverse(long long a, long long m) {     
+a = a % m;     for (long long x = 1; x < m; x++) {         
+if ((a * x) % m == 1) {             
+}  
+}  
+return 1;  
+}  
+return x;  
+long long power(long long base, long long exp, long long mod) {     
+long long result = 1;     base = base % mod;     while (exp > 0) {         
+if (exp % 2 == 1) {            
+}  
+exp = exp >> 1;         
+(base * base) % mod;  
+}  
+return result;  
+ result = (result * base) % mod;  
+base = 
+}  
+int isPrime(long long n) {     if (n <= 1) 
+return 0;     for (long long i = 2; i <= 
+sqrt(n); i++) {        
+0;  
+}  
+}  
+return 1;  
+int main() {    
+ if (n % i == 0) return 
+ long long p, q, n, phi, e, d, message, encryptedMessage, 
+decryptedMessage;  
+// Choose two prime numbers     printf("Enter prime 
+number p: ");     scanf("%lld", &p);     while (!isPrime(p)) {         
+printf("p is not a prime number. Enter a prime number: ");         
+scanf("%lld", &p);  
+}  
+printf("Enter prime number q: ");     scanf("%lld", &q);     
+while (!isPrime(q)) {        
+a prime number: ");         
+}  
+// Calculate n = p * q     
+n = p * q;  
+ printf("q is not a prime number. Enter 
+scanf("%lld", &q);  
+// Calculate phi(n) = (p-1)*(q-1)     
+phi = (p - 1) * (q - 1);  
+// Choose e such that 1 < e < phi(n) and gcd(e, phi(n)) = 1     printf("Enter public 
+key exponent e (1 < e < %lld and gcd(e, %lld) = 1): ", phi, phi);     scanf("%lld", &e);     
+while (gcd(e, phi) != 1) {        
+scanf("%lld", &e);  
+}  
+ printf("Invalid e. Enter a valid public key exponent: ");         
+// Calculate the private key d such that (d * e) % phi = 1  
+d = modInverse(e, phi);  
+// Enter the message  
+printf("Enter the message to encrypt (as an integer): ");     
+scanf("%lld", &message);  
+// Encrypt the message     encryptedMessage = 
+power(message, e, n);     printf("Encrypted message: 
+%lld\n", encryptedMessage);  
+// Decrypt the message     decryptedMessage = 
+power(encryptedMessage, d, n);     printf("Decrypted 
+message: %lld\n", decryptedMessage);  
+return 0;  
+}  
+```
 
 
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <ctype.h>
-#include <stdlib.h>
 
-int gcd(int a, int b) {
-    while (b != 0) {
-        int temp = b;
-        b = a % b;
-        a = temp;
-    }
-    return a;
-}
-long long mod_exp(long long base, long long exp, long long mod) {
-    long long result = 1;
-    while (exp > 0) {
-        if (exp % 2 == 1)
-            result = (result * base) % mod;
-        base = (base * base) % mod;
-        exp = exp / 2;
-    }
-    return result;
-}
-
-int mod_inverse(int e, int phi) {
-    int t = 0, newt = 1;
-    int r = phi, newr = e;
-    while (newr != 0) {
-        int quotient = r / newr;
-        int temp = t;
-        t = newt;
-        newt = temp - quotient * newt;
-        temp = r;
-        r = newr;
-        newr = temp - quotient * newr;
-    }
-    if (r > 1) return -1;
-    if (t < 0) t = t + phi;
-    return t;
-}
-
-int main() {
-    int p = 61;
-    int q = 53;
-    int n = p * q;
-    int phi = (p - 1) * (q - 1);
-    int e = 17;
-    if (gcd(e, phi) != 1) {
-        printf("e and phi(n) are not coprime!\n");
-        return -1;
-    }
-    int d = mod_inverse(e, phi);
-    if (d == -1) {
-        printf("No modular inverse found for e!\n");
-        return -1;
-    }
-
-    printf("Public Key: (e = %d, n = %d)\n", e, n);
-    printf("Private Key: (d = %d, n = %d)\n", d, n);
-
-    char message[100];
-    printf("Enter a message to encrypt (alphabetic characters only): ");
-    fgets(message, sizeof(message), stdin);
-    int len = strlen(message);
-    if (message[len - 1] == '\n') message[len - 1] = '\0'; 
-    printf("\nEncrypted Message:\n");
-    long long encrypted[100];
-    for (int i = 0; i < len; i++) {
-        int m = (int)message[i];  
-        encrypted[i] = mod_exp(m, e, n);  
-        printf("%lld ", encrypted[i]);  
-    }
-    printf("\n");
-
-    // Step 8: Decrypt the message
-    printf("\nDecrypted Message:\n");
-    for (int i = 0; i < len; i++) {
-        int decrypted = (int)mod_exp(encrypted[i], d, n);  
-        printf("%c", (char)decrypted); 
-    printf("\n");
-
-    return 0;
-}
-
-``
 ## Output:
 
-<img width="1917" height="1042" alt="Screenshot 2025-10-24 091904" src="https://github.com/user-attachments/assets/f89e9ff1-30e7-4f0d-8821-fb6dc4cf4fab" />
-
-##Result:
-
-The code has been successfully created and verified.
-
-
+![image](https://github.com/user-attachments/assets/34d5867b-befe-4037-a9df-71efdf081030)
 
 
 ## Result:
